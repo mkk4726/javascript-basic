@@ -1,10 +1,14 @@
+const todoInput = document.getElementById("todo-list")
+
 const keyCodeCheck = () => {
-  if (window.event.keyCode === 13) {
-    const inputValue = document.querySelector('#todo-input').value;
+  const inputValue = document.querySelector('#todo-input').value;
+  if (window.event.keyCode === 13 && inputValue !=='') {
     const newLi = document.createElement('li');
     const newSpan = document.createElement('span');
-    console.log(inputValue, newLi, newSpan);
 
+    newSpan.textContent = inputValue;
+    newLi.appendChild(newSpan);
+    todoInput.appendChild(newLi);    
 
 
   }
