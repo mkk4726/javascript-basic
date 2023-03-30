@@ -75,10 +75,10 @@ const counterMaker = () => {
 
 const starter = () => {
   messageContainer.style.display = 'none'
-  for (let i =0; i< 100; i++) {
-    setTimeout(() => {  
-      counterMaker();
-    }, 1000 * i); 
-  }
+  // setInterval(() => {
+  //   counterMaker();
+  // }, 1000)
+  counterMaker();
+  setInterval(counterMaker, 1000);
 }
 
