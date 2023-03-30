@@ -2,25 +2,49 @@
 <html lang="ko">
 <head>
   <title>D-Day Counter</title>
-  <script>
-    const output = function () {
-      console.log("함수를 실행했어요.");
-    };
-    const dateFormMaker = () => {
-      const inputYear = document.querySelector('#target-year-input').value;
-      const inputMonth = document.querySelector('#target-month-input').value;
-      const inputDate = document.querySelector('#target-date-input').value;
-
-      console.log(inputYear, inputMonth, inputDate)
-    };
-  </script>
+  <link href="./index.css" rel="stylesheet">
+  <script src="./index.js" defer></script>
 </head>
 <body>
-  <input id="target-year-input" class="target-input">
-  <input id="target-month-input" class="target-input">
-  <input id="target-date-input" class="target-input">
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <span>D-Day</span>
+      </div>
+      <div class="date__container">
+        <div class="day">
+          <span id="day">0</span>
+          <span>일</span>
+        </div>
+        <div class="hour">
+          <span id="hour">0</span>
+          <span>시간</span>
+        </div>
+        <div class="minute">
+          <span id="minute">0</span>
+          <span>분</span>
+        </div>
+        <div class="second">
+          <span id="second">0</span>
+          <span>초</span>
+        </div>
+      </div>
+      <div id="d-day-message">
+        <!-- test -->
+      </div>
+      <div class="input">
+        <input id="target-year-input" class="target-input" maxlength="4" placeholder="year" oninput="changeFocus.first()">-
+        <input id="target-month-input" class="target-input" maxlength="2" placeholder="month" oninput="changeFocus.second()">-
+        <input id="target-date-input" class="target-input" maxlength="2" placeholder="day">
+      </div>
+      <div class="countdown">
+        <button onclick="counterMaker()">카운트다운 시작</button>
+      </div>
+    </div>
+  </div>
   
-  <button onclick="dateFormMaker()">버튼</button>
+  
+  
   
 </body>
 </html>

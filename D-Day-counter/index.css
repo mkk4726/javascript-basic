@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 50px;
+}
+
+.container {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.header {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.date__container {
+  width: 40%;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+}
+
+#d-day-message {
+  font-size: 11px;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.input input {
+  width: 10%;
+}
+
+.countdown button {
+  font-weight: 700;
+}
