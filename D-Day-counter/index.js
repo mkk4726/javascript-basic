@@ -1,6 +1,6 @@
 const messageContainer = document.querySelector('#d-day-message');
 messageContainer.textContent = 'D-Day를 입력해주세요.(ex: 2023-01-01)';
-
+const dateContainer = document.querySelector('.date__container');
 
 const changeFocus = {
   first : () => {
@@ -37,7 +37,6 @@ const counterMaker = () => {
   const nowDate = new Date();
   const targetDate = new Date(targetDateInput);
   const remaining = (targetDate - nowDate) / 1000;
-  const dateContainer = document.querySelector('.date__container');
 
   if (remaining <= 0) {
     console.log('타이머가 종료되었습니다.');
@@ -72,10 +71,14 @@ const counterMaker = () => {
     document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
     i++;
   }
+};
 
-  
-
-
-
+const starter = () => {
+  messageContainer.style.display = 'none'
+  for (let i =0; i< 100; i++) {
+    setTimeout(() => {  
+      counterMaker();
+    }, 1000 * i); 
+  }
 }
 
