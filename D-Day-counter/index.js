@@ -1,6 +1,8 @@
 const messageContainer = document.querySelector('#d-day-message');
-messageContainer.textContent = 'D-Day를 입력해주세요.(ex: 2023-01-01)';
 const dateContainer = document.querySelector('.date__container');
+messageContainer.textContent = 'D-Day를 입력해주세요.(ex: 2023-01-01)';
+dateContainer.style.display = 'none';
+
 
 const changeFocus = {
   first : () => {
@@ -44,6 +46,7 @@ const counterMaker = () => {
     messageContainer.style.display = '';
     messageContainer.textContent = '타이머가 종료되었습니다.';
     messageContainer.style.fontSize = '20px'
+    setClearInterval();
   } else if (isNaN(remaining)) {
     console.log('유효한 시간대가 아닙니다.')
     dateContainer.style.display = 'none';
@@ -66,6 +69,8 @@ const counterMaker = () => {
   const timeKeys = Object.keys(remainingObj);
   const docArr = ['day', 'hour', 'minute', 'second'];
   
+  dateContainer.style.display = '';
+
   let i = 0;
   for (let tag of docArr) {
     document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
@@ -73,12 +78,26 @@ const counterMaker = () => {
   }
 };
 
+
+const intervalIdArr = [];
+
 const starter = () => {
   messageContainer.style.display = 'none'
   // setInterval(() => {
   //   counterMaker();
   // }, 1000)
   counterMaker();
-  setInterval(counterMaker, 1000);
+  const intervalId = setInterval(counterMaker, 1000);
+  intervalIdArr.push(intervalId);
+  console.log(intervalIdArr);
 }
 
+const setClearInterval = () => {
+  for (let i = 0; i<intervalIdArr.length; i++) {
+    clearInterval(intervalIdArr[i]);
+  }
+  messageContainer.textContent = 'D-Day를 입력해주세요.(ex: 2023-01-01)';
+  dateContainer.style.display = 'none';
+  messageContainer.style.fontSize = '11px'
+
+}
