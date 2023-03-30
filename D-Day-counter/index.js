@@ -3,6 +3,8 @@ const dateContainer = document.querySelector('.date__container');
 messageContainer.textContent = 'D-Day를 입력해주세요.(ex: 2023-01-01)';
 dateContainer.style.display = 'none';
 
+const saveDate = localStorage.getItem('saved-date');
+
 
 const changeFocus = {
   first : () => {
@@ -34,30 +36,29 @@ const dateFormMaker = () => {
   return dateFormat;
 };
 
-const counterMaker = () => {
-  const targetDateInput = dateFormMaker();
+const counterMaker = (targetDateInput) => {
   const nowDate = new Date();
   const targetDate = new Date(targetDateInput);
   const remaining = (targetDate - nowDate) / 1000;
-
   if (remaining <= 0) {
+    setClearInterval();
     console.log('타이머가 종료되었습니다.');
     dateContainer.style.display = 'none';
     messageContainer.style.display = '';
     messageContainer.textContent = '타이머가 종료되었습니다.';
     messageContainer.style.fontSize = '20px'
-    setClearInterval();
+    return false;
+    
   } else if (isNaN(remaining)) {
+    console.log(remaining)
+    setClearInterval()
     console.log('유효한 시간대가 아닙니다.')
     dateContainer.style.display = 'none';
     messageContainer.style.display = '';
     messageContainer.textContent = '형식을 확인해주세요.';
     messageContainer.style.fontSize = '20px'
-
-  } else {
-    dateContainer.style.display = '';
-    messageContainer.style.display = 'none';
-  }
+    return false;
+  } 
 
   const remainingObj = {
     remainingDate : Math.floor(remaining / 3600 / 24),
@@ -71,25 +72,37 @@ const counterMaker = () => {
   
   dateContainer.style.display = '';
 
+  
+
   let i = 0;
   for (let tag of docArr) {
     document.getElementById(tag).textContent = remainingObj[timeKeys[i]];
     i++;
   }
+
+  return true;
 };
 
 
 const intervalIdArr = [];
 
-const starter = () => {
+const starter = (targetDateInput) => {
+  if (!targetDateInput) {
+    targetDateInput = dateFormMaker();
+  }
+  if (!counterMaker(targetDateInput)) {
+    return ;
+  } 
+  localStorage.setItem('saved-date', targetDateInput);
   messageContainer.style.display = 'none'
-  // setInterval(() => {
-  //   counterMaker();
-  // }, 1000)
-  counterMaker();
-  const intervalId = setInterval(counterMaker, 1000);
+  if (intervalIdArr.length === 1) {
+    setClearInterval();
+  }
+  counterMaker(targetDateInput);
+  let intervalId = setInterval(() => {
+    counterMaker(targetDateInput);
+  }, 1000)
   intervalIdArr.push(intervalId);
-  console.log(intervalIdArr);
 }
 
 const setClearInterval = () => {
@@ -100,4 +113,10 @@ const setClearInterval = () => {
   dateContainer.style.display = 'none';
   messageContainer.style.fontSize = '11px'
 
+};
+
+if (saveDate) {
+  starter(saveDate);
+} else {
+  console.log('data is null');
 }
