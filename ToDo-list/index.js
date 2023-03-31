@@ -2,15 +2,13 @@ const todoInput = document.getElementById("todo-input")
 const todoList = document.querySelector('#todo-list')
 
 const savedTodoList = JSON.parse(localStorage.getItem('saved-items'));
+const savedWeatherData = JSON.parse(localStorage.getItem('saved-weather'));
 
 const createTodo = (storageData) => {
   let todoContents = todoInput.value;
   if (storageData) {
     todoContents = storageData.contents;
   }
-  
-  console.log(todoInput.value);
-  console.log(todoContents);
 
   const newLi = document.createElement('li');
   const newSpan = document.createElement('span');
@@ -25,12 +23,16 @@ const createTodo = (storageData) => {
     newLi.remove();
     saveItemsFn();
   })
-
+  
   newSpan.textContent = todoContents;
+  if (storageData.complete) {
+    newLi.classList.add('complete')
+  }
+
   newLi.appendChild(newBtn)
   newLi.appendChild(newSpan);
   todoList.appendChild(newLi); 
-  // saveItemsFn();
+  saveItemsFn();
   
 
   todoInput.value = ''
@@ -88,6 +90,14 @@ const weatherDataActive = ({ location, weather}) => {
   const locationNameTag = document.querySelector('#locationNameTag');
   locationNameTag.textContent = location;
   document.body.style.backgroundImage = `url("./images/${weather}.jpg")`;
+
+  if ( 
+    !savedWeatherData || 
+    savedWeatherData.location !== location || 
+    savedWeatherData.weather !== weather
+  ) {
+    localStorage.setItem('saved-weather', JSON.stringify({location, weather}))
+  }
 }
 
 
@@ -131,6 +141,10 @@ const error = (err) => {
 
 const askForLocation = () => {
   navigator.geolocation.getCurrentPosition(success, error)
+}
+
+if(savedWeatherData) {
+  weatherDataActive(savedWeatherData);
 }
 
 askForLocation();
