@@ -6,8 +6,10 @@ const savedWeatherData = JSON.parse(localStorage.getItem('saved-weather'));
 
 const createTodo = (storageData) => {
   let todoContents = todoInput.value;
+  let complete = false;
   if (storageData) {
     todoContents = storageData.contents;
+    complete = storageData.complete;
   }
 
   const newLi = document.createElement('li');
@@ -25,7 +27,7 @@ const createTodo = (storageData) => {
   })
   
   newSpan.textContent = todoContents;
-  if (storageData.complete) {
+  if (complete) {
     newLi.classList.add('complete')
   }
 
