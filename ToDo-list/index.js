@@ -75,25 +75,27 @@ const apiKey = 'b75c314757d971db1a7dd9cb39fb791f';
 const apiKey_default = 'a50ebb9af615c1ed1152e278f7b7b8bf';
 
 const weatherSearch = (pos, apiKey) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${pos.lat}&lon=${pos.lon}&appid=${apiKey}`;
+  const {latitude:lat, longitude:lon} = pos;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
   fetch(url)
     .then((res) => {
       // console.log(res.json());
       return res.json();
     })
     .then((json) => {
-      console.log(json.name, json.weather[0].description);
+      console.log(json.name, json.weather[0].main);
     })
     .catch((err) => {
       console.log(err);
     })
 }
 
-const success = (pos) => {
-  const crd = pos.coords;
+const success = ({ coords }) => {
+  const {latitude, longitude} = coords;
+  
   const position = {
-    lat: crd.latitude,
-    lon : crd.longitude
+    latitude,
+    longitude
   }
 
   weatherSearch(position, apiKey_default);
